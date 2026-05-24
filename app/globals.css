@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   COCOON — Clean light design system
+   Calm, clinical, professional. Not a gaming dashboard.
+   Warm off-white base, clean white panels, slate text.
+───────────────────────────────────────────── */
+
+:root {
+  color-scheme: light;
+
+  /* ── Page & surfaces ── */
+  --bg-page:    #F2F1EE;   /* warm off-white page wash              */
+  --bg-panel:   #FFFFFF;   /* white panels                          */
+  --bg-raised:  #F7F7F5;   /* slightly raised (inputs, nested)      */
+  --bg-hover:   #F0EFF0;   /* hover state on items                  */
+  --bg-active:  #EAEAEA;   /* selected/active                       */
+
+  /* ── Borders ── */
+  --border-0:  rgba(0,0,0,0.06);   /* hairline, very subtle    */
+  --border-1:  rgba(0,0,0,0.10);   /* standard component       */
+  --border-2:  rgba(0,0,0,0.18);   /* emphasis, focused        */
+  --border-focus: #5B5EA6;         /* indigo focus ring        */
+
+  /* ── Text ── */
+  --text-primary:     #1A1A1A;   /* near-black headings       */
+  --text-secondary:   #3C3C3C;   /* body copy                 */
+  --text-tertiary:    #717171;   /* labels, hints             */
+  --text-quaternary:  #A8A8A8;   /* placeholders, disabled    */
+
+  /* ── Accent — muted indigo ── */
+  --accent:        #5B5EA6;               /* primary action           */
+  --accent-hover:  #4A4D95;               /* hover                    */
+  --accent-dim:    rgba(91,94,166,0.08);  /* tinted background        */
+  --accent-text:   #5B5EA6;              /* text on white bg         */
+
+  /* ── Status ── */
+  --green:      #1E7E3E;
+  --green-dim:  rgba(30,126,62,0.09);
+  --amber:      #9A6700;
+  --amber-dim:  rgba(154,103,0,0.09);
+  --red:        #C0392B;
+  --red-dim:    rgba(192,57,43,0.09);
+  --blue:       #1D6FA4;
+  --blue-dim:   rgba(29,111,164,0.09);
+
+  /* ── Call state colors ── */
+  --state-idle:      #A8A8A8;
+  --state-speaking:  #5B5EA6;
+  --state-listening: #1D6FA4;
+  --state-thinking:  #7B68C8;
+  --state-escalated: #C0392B;
+  --state-done:      #1E7E3E;
+
+  /* ── Typography ── */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 14px;
+  --text-md:   16px;
+  --text-lg:   19px;
+  --text-xl:   23px;
+
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ── Radius ── */
+  --radius-sm:  4px;
+  --radius-md:  6px;
+  --radius-lg:  8px;
+  --radius-xl:  12px;
+  --radius-pill: 9999px;
+
+  /* ── Easing ── */
+  --ease-out:    cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  /* ── Speed ── */
+  --speed-fast:   100ms;
+  --speed-normal: 180ms;
+}
+
+/* ─── Base reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.009em;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+textarea, input, select { font: inherit; }
+
+/* ─── Focus ──────────────────────────────────── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* ─── Selection ──────────────────────────────── */
+::selection {
+  background: var(--accent-dim);
+  color: var(--text-primary);
+}
+
+/* ─── Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(0,0,0,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.2); }
+
+/* ─── Animations ─────────────────────────────── */
+
+/* Speaking — calm indigo pulse */
+@keyframes orb-speak {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(91,94,166,0.25), 0 0 0 6px rgba(91,94,166,0.06); }
+  50%       { box-shadow: 0 0 0 10px rgba(91,94,166,0.10), 0 0 0 20px rgba(91,94,166,0.03); }
+}
+
+/* Listening — blue gentle breathe */
+@keyframes orb-listen {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(29,111,164,0.2); }
+  50%       { transform: scale(1.025); box-shadow: 0 0 0 12px rgba(29,111,164,0.05); }
+}
+
+/* Thinking — slow rotation */
+@keyframes orb-think {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Entrance */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes turn-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Waveform */
+@keyframes waveform {
+  0%, 100% { transform: scaleY(0.25); }
+  25%       { transform: scaleY(1);    }
+  50%       { transform: scaleY(0.5);  }
+  75%       { transform: scaleY(0.8);  }
+}
+
+/* Cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes phone-ring {
+  0%   { transform: scale(0.78); opacity: 0.55; }
+  70%  { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
+}
+
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(30,126,62,0.35); }
+  50%      { box-shadow: 0 0 0 7px rgba(30,126,62,0); }
+}
+
+/* Mic activity: bars bounce at different heights to show live audio input */
+@keyframes mic-bar {
+  0%, 100% { transform: scaleY(0.2); opacity: 0.45; }
+  50%       { transform: scaleY(1);   opacity: 1;    }
+}
+
+/* ─── Utility classes ─────────────────────────── */
+.animate-orb-speak  { animation: orb-speak  2.8s ease-in-out infinite; }
+.animate-orb-listen { animation: orb-listen 3s var(--ease-spring) infinite; }
+.animate-orb-think  { animation: orb-think  1.4s linear infinite; }
+.animate-fade-up    { animation: fade-up    0.25s var(--ease-spring) both; }
+.animate-fade-in    { animation: fade-in    0.2s var(--ease-out) both; }
+.animate-turn-in    { animation: turn-in    0.2s var(--ease-spring) both; }
+.animate-blink      { animation: blink      1.2s step-end infinite; }
+.animate-phone-ring { animation: phone-ring 1.8s ease-out infinite; }
+.animate-live-pulse { animation: live-pulse 2s ease-out infinite; }
+
+.waveform-bar { animation: waveform 0.8s ease-in-out infinite; }
+
+/* Mic activity bars */
+.mic-bar { animation: mic-bar 0.7s ease-in-out infinite; transform-origin: bottom; }
+.mic-bar:nth-child(1) { animation-delay: 0s;     animation-duration: 0.65s; }
+.mic-bar:nth-child(2) { animation-delay: 0.12s;  animation-duration: 0.80s; }
+.mic-bar:nth-child(3) { animation-delay: 0.06s;  animation-duration: 0.55s; }
+.mic-bar:nth-child(4) { animation-delay: 0.20s;  animation-duration: 0.75s; }
+.mic-bar:nth-child(5) { animation-delay: 0.09s;  animation-duration: 0.62s; }
+.waveform-bar:nth-child(1) { animation-delay: 0s; }
+.waveform-bar:nth-child(2) { animation-delay: 0.11s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.19s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.07s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.15s; }
+.waveform-bar:nth-child(6) { animation-delay: 0.04s; }
+.waveform-bar:nth-child(7) { animation-delay: 0.22s; }
